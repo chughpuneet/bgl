@@ -54,6 +54,12 @@ The project is designed following **SOLID principles**, **Command design pattern
 
 ---
 
+## Start Application
+
+- **Run the `BikeSimulatorApplication` to start **:  
+
+---
+
 | Category   | Tool / Framework            |
 | ---------- | --------------------------- |
 | Language   | Java 17                     |
