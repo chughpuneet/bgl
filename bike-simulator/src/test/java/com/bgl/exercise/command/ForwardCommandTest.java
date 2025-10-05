@@ -31,7 +31,17 @@ public class ForwardCommandTest {
     }
 
     @Test
+    public void shouldNotMoveForwardIfBikeIsNotPlaced() {
+        when(bike.isPlaced()).thenReturn(false);
+
+        forwardCommand.execute(bike, grid);
+
+        verify(bike, times(0)).setGridLocation(eq(nextGridLocation));
+    }
+
+    @Test
     public void shouldNotChangeBikeLocationWhenNextMoveIsOutOfGridBound() {
+        when(bike.isPlaced()).thenReturn(true);
         when(bike.getNextGridLocation()).thenReturn(nextGridLocation);
         when(grid.isValidGridLocation(anyInt(), anyInt())).thenReturn(false);
 
@@ -42,6 +52,7 @@ public class ForwardCommandTest {
 
     @Test
     public void shouldChangeBikeLocationWhenNextMoveIsWithinGridBound() {
+        when(bike.isPlaced()).thenReturn(true);
         when(bike.getNextGridLocation()).thenReturn(nextGridLocation);
         when(grid.isValidGridLocation(anyInt(), anyInt())).thenReturn(true);
 

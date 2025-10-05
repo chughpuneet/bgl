@@ -15,7 +15,7 @@ public class InputValidator {
 
     public Optional<BikeSimulatorInput> validateAndExtractCommand(String input) {
         return Arrays.stream(BikeSimulatorInput.values())
-                .filter(bikeSimulatorInput -> bikeSimulatorInput.getInputPattern().matcher(input).matches())
+                .filter(bikeSimulatorInput -> bikeSimulatorInput.getInputPattern().matcher(input.trim()).matches())
                 .findFirst();
     }
 }

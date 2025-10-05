@@ -6,6 +6,10 @@ import com.bgl.exercise.model.Grid;
 public class TurnRightCommand implements Command {
     @Override
     public void execute(Bike bike, Grid grid) {
-        bike.turnRight();
+        if(bike.isPlaced()) {
+            bike.turnRight();
+        }else {
+            System.out.println("Bike is not placed");
+        }
     }
 }

@@ -7,9 +7,13 @@ import com.bgl.exercise.model.GridLocation;
 public class ForwardCommand implements Command {
     @Override
     public void execute(Bike bike, Grid grid) {
-        GridLocation nextGridLocation = bike.getNextGridLocation();
-        if (grid.isValidGridLocation(nextGridLocation.getColumn(), nextGridLocation.getRow())) {
-            bike.setGridLocation(nextGridLocation);
+        if(bike.isPlaced()){
+            GridLocation nextGridLocation = bike.getNextGridLocation();
+            if (grid.isValidGridLocation(nextGridLocation.getColumn(), nextGridLocation.getRow())) {
+                bike.setGridLocation(nextGridLocation);
+            }
+        }else {
+            System.out.println("Bike is not placed");
         }
     }
 }

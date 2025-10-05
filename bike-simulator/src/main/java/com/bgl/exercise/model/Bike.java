@@ -33,8 +33,10 @@ public class Bike {
     }
 
     public String getCurrentPosition() {
-        if (!placed) return "Bike not placed yet";
         return String.format("(%d,%d), %s", gridLocation.getColumn(), gridLocation.getRow(), currentFacingDirection.getName());
     }
 
+    public boolean isPlaced() {
+        return placed;
+    }
 }

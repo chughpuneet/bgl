@@ -7,6 +7,10 @@ public class TurnLeftCommand implements Command {
 
     @Override
     public void execute(Bike bike, Grid grid) {
-        bike.turnLeft();
+        if(bike.isPlaced()) {
+            bike.turnLeft();
+        }else {
+            System.out.println("Bike is not placed");
+        }
     }
 }
