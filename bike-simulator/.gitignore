@@ -1,0 +1,10 @@
+# Maven target folder
+/target/
+
+# IDE specific files
+.idea/
+*.iml
+*.class
+
+# OS specific
+.DS_Store
