@@ -16,7 +16,7 @@ public class PlaceCommand implements Command {
 
     @Override
     public void execute(Bike bike, Grid grid) {
-        if (grid.isValidGridLocation(gridLocation.getRow(), gridLocation.getColumn())) {
+        if (grid.isValidGridLocation(gridLocation.getColumn(), gridLocation.getRow())) {
             bike.placeOnGrid(gridLocation, direction);
         }
 

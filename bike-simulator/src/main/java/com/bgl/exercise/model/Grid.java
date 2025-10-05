@@ -9,7 +9,7 @@ public class Grid {
         this.rows = rows;
     }
 
-    public boolean isValidGridLocation(int xCoordinate, int yCoordinate) {
-        return xCoordinate >= 0 && xCoordinate < this.columns && yCoordinate >= 0 && yCoordinate < this.rows;
+    public boolean isValidGridLocation(int column, int row) {
+        return column >= 0 && column < this.columns && row >= 0 && row < this.rows;
     }
 }

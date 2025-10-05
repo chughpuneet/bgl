@@ -69,4 +69,13 @@ class PlaceCommandParserTest {
 
         assertInstanceOf(PlaceCommand.class, command);
     }
+
+    @Test
+    void shouldParseInputCaseInsensitive() {
+        String input = "Place 0,0,West";
+
+        Command command = parser.parseCommand(input);
+
+        assertInstanceOf(PlaceCommand.class, command);
+    }
 }

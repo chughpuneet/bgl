@@ -31,7 +31,7 @@ public class PlaceCommandParser implements CommandParser {
 
     @Override
     public Command parseCommand(String input) {
-        String placeCommandAttributesInput = input.replace(PLACE_COMMAND, "");
+        String placeCommandAttributesInput = input.toUpperCase().replace(PLACE_COMMAND, "");
         String[] placeCommandAttributes = placeCommandAttributesInput.split(",");
 
         GridLocation location = getLocation(placeCommandAttributes);

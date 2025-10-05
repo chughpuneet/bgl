@@ -8,7 +8,7 @@ public class ForwardCommand implements Command {
     @Override
     public void execute(Bike bike, Grid grid) {
         GridLocation nextGridLocation = bike.getNextGridLocation();
-        if (grid.isValidGridLocation(nextGridLocation.getRow(), nextGridLocation.getColumn())) {
+        if (grid.isValidGridLocation(nextGridLocation.getColumn(), nextGridLocation.getRow())) {
             bike.setGridLocation(nextGridLocation);
         }
     }
