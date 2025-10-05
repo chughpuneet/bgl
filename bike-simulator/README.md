@@ -4,7 +4,7 @@
 
 This project simulates a bike moving on a 7x7 grid. The bike can move forward, turn left or right, and report its position using GPS commands. It ensures the bike **never exits the grid** and ignores invalid commands.
 
-The project is designed following **SOLID principles**, the **Command design pattern**, and **TDD practices** for maintainable and testable code.
+The project is designed following **SOLID principles**, **Command design pattern**, **Factory pattern**, **Singleton pattern** and **TDD practices** for maintainable and testable code.
 
 ---
 
@@ -21,36 +21,36 @@ The project is designed following **SOLID principles**, the **Command design pat
 ## Design
 
 - **Command**:  
-  Each command (`PlaceCommand`, `ForwardCommand`, `TurnLeftCommand`, `TurnRightCommand`, `GpsReportCommand`) implements a `Command` interface for executing actions.
+  Each command (`PlaceCommand`, `ForwardCommand`, `TurnLeftCommand`, `TurnRightCommand`, `GpsReportCommand`) implements a `Command` interface and execute respective actions.
 
 - **Direction**:
     - Interface: `FacingDirection`
     - Implementations: `NorthFacingDirection`, `EastFacingDirection`, `SouthFacingDirection`, `WestFacingDirection`
     - Handles direction-specific movement and rotation logic
-    - Each direction controller is a **singleton**
+    - Each direction is a **singleton**
 
 - **Model & Controller**:
-    - `Bike` maintains current position and facing direction
-    - `Grid` contains the information about rows (Y-axis) and columns (X-axis) and validates a point exist on the grid
-    - `BikeGridController` coordinates command execution
+    - `Bike` maintains current position and facing direction on the `Grid`
+    - `Grid` contains the information about rows (Y-axis) and columns (X-axis) and validates a location (x,y) exist on the grid
+    - `BikeGridController` coordinates command execution for `Bike` on `Grid`
 
 - **Factory & Parser**:
-    - `CommandFactory` creates `Command` instances from user input
+    - `CommandFactory` creates `Command` instances from respective user input
     - `PlaceCommandParser` parses PLACE command inputs
-    - `InputValidator` validates commands using regex patterns from `BikeSimulatorInput` enum
 
 - **Validator**:
     - `InputValidator` validates user input
+    - `InvalidUserInputException` is thrown when input is invalid
 ---
 
 ## Input Format
 
-Commands supported:
-PLACE X,Y,FACING
-FORWARD
-TURN_LEFT
-TURN_RIGHT
-GPS_REPORT
+### Commands supported:
+    - PLACE X,Y, DirectionFacing (NORTH | EAST | SOUTH | WEST)
+    - FORWARD
+    - TURN_LEFT
+    - TURN_RIGHT
+    - GPS_REPORT
 
 ---
 
