@@ -22,12 +22,14 @@ public class EightNeighboursGameOfLife {
     private final GameOfLifeBoardValidator validator;
 
     public EightNeighboursGameOfLife(int columns, int rows, int[][] aliveCellCoordinates) {
-        this.gameOfLifeBoard = new GameOfLifeBoard(new Grid(columns, rows),
+        this.validator = new GameOfLifeBoardValidator(ValidatorFactory.getInstance().defaultValidators());
+        this.controller = new GameOfLifeController(new RuleEngine(GameOfLifeRulesFactory.getInstance().getGameOfLifeRules()));
+
+        GameOfLifeBoard tempBoard = new GameOfLifeBoard(new Grid(columns, rows),
                 new AliveGeneration(toGridCells(aliveCellCoordinates)),
                 EightNeighboursStrategy.getInstance());
-        this.controller = new GameOfLifeController(new RuleEngine(GameOfLifeRulesFactory.getInstance().getGameOfLifeRules()));
-        this.validator = new GameOfLifeBoardValidator(ValidatorFactory.getInstance().defaultValidators());
-        validateGameOfLifeBoard();
+        validateGameOfLifeBoard(tempBoard);
+        this.gameOfLifeBoard = tempBoard;
     }
 
     public AliveGeneration advanceToNextGeneration() {
@@ -42,8 +44,8 @@ public class EightNeighboursGameOfLife {
                 .collect(Collectors.toSet());
     }
 
-    private void validateGameOfLifeBoard() {
-        Optional<String> validationErrorMessage = validator.validate(gameOfLifeBoard);
+    private void validateGameOfLifeBoard(GameOfLifeBoard board) {
+        Optional<String> validationErrorMessage = validator.validate(board);
         if (validationErrorMessage.isPresent()) {
             throw new IllegalArgumentException(validationErrorMessage.get());
         }
