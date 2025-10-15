@@ -9,7 +9,7 @@ import com.bgl.exercise.gameoflife.rule.GameOfLifeRulesFactory;
 import com.bgl.exercise.gameoflife.rule.RuleEngine;
 import com.bgl.exercise.gameoflife.strategy.EightNeighbourStrategy;
 import com.bgl.exercise.gameoflife.validator.GameOfLifeBoardValidator;
-import com.bgl.exercise.gameoflife.validator.ValidatorDefinitions;
+import com.bgl.exercise.gameoflife.validator.ValidatorFactory;
 import java.util.Arrays;
 import java.util.Optional;
 import java.util.Set;
@@ -26,7 +26,7 @@ public class EightNeighbourGameOfLife {
                 new AliveGeneration(toGridCells(aliveCellCoordinates)),
                 EightNeighbourStrategy.getInstance());
         this.controller = new GameOfLifeController(new RuleEngine(GameOfLifeRulesFactory.getInstance().getGameOfLifeRules()));
-        this.validator = new GameOfLifeBoardValidator(ValidatorDefinitions.DEFAULT.getValidators());
+        this.validator = new GameOfLifeBoardValidator(ValidatorFactory.getInstance().defaultValidators());
         validateGameOfLifeBoard();
     }
 
