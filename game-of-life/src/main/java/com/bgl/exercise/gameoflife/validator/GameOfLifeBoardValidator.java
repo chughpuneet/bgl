@@ -12,7 +12,7 @@ public class GameOfLifeBoardValidator {
         this.validators = validators;
     }
 
-    public Optional<String> validateGameOfLifeBoard(GameOfLifeBoard gameOfLifeBoard) {
+    public Optional<String> validate(GameOfLifeBoard gameOfLifeBoard) {
         List<String> validationErrorMessages = validators.stream()
                 .map(v -> v.validateAndGetErrorMessage(gameOfLifeBoard))
                 .filter(Optional::isPresent)

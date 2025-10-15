@@ -5,9 +5,9 @@ import java.util.Arrays;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class EightNeighbourStrategy extends CellNeighbourStrategy {
+public class EightNeighboursStrategy extends CellNeighbourStrategy {
 
-    private static final EightNeighbourStrategy INSTANCE = new EightNeighbourStrategy();
+    private static final EightNeighboursStrategy INSTANCE = new EightNeighboursStrategy();
 
     @Override
     public Set<Cell> getNeighbours(Cell cell) {
@@ -16,7 +16,7 @@ public class EightNeighbourStrategy extends CellNeighbourStrategy {
                 .collect(Collectors.toSet());
     }
 
-    public static EightNeighbourStrategy getInstance() {
+    public static EightNeighboursStrategy getInstance() {
         return INSTANCE;
     }
 }

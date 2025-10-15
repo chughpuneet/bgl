@@ -51,7 +51,7 @@ public class GameOfLifeControllerTest {
         when(ruleEngine.applyNextStateRule(CellLifeState.ALIVE, 0)).thenReturn(CellLifeState.ALIVE);
         when(cellNeighbourStrategy.getNeighbours(eq(new Cell(1, 1)))).thenReturn(Set.of(new Cell(2, 2)));
 
-        AliveGeneration nextGen = controller.calculateNextGeneration(board);
+        AliveGeneration nextGen = controller.computeNextGeneration(board);
 
         assertTrue(nextGen.contains(new Cell(1, 1)), "Cell (1,1) should remain alive");
     }
@@ -61,7 +61,7 @@ public class GameOfLifeControllerTest {
         when(ruleEngine.applyNextStateRule(CellLifeState.ALIVE, 0)).thenReturn(CellLifeState.DEAD);
         when(cellNeighbourStrategy.getNeighbours(eq(new Cell(1, 1)))).thenReturn(Set.of(new Cell(2, 2)));
 
-        AliveGeneration nextGen = controller.calculateNextGeneration(board);
+        AliveGeneration nextGen = controller.computeNextGeneration(board);
 
         assertFalse(nextGen.contains(new Cell(1, 1)), "Cell (1,1) should be dead");
         assertEquals(0, nextGen.aliveCells().size(), "No alive cells expected");
@@ -71,7 +71,7 @@ public class GameOfLifeControllerTest {
     void shouldCallRuleEngineForAliveAndNeighbourCells() {
         when(cellNeighbourStrategy.getNeighbours(eq(new Cell(1, 1)))).thenReturn(Set.of(new Cell(2, 2)));
 
-        controller.calculateNextGeneration(board);
+        controller.computeNextGeneration(board);
 
         verify(ruleEngine, times(2)).applyNextStateRule(any(CellLifeState.class), anyInt());
     }
@@ -80,7 +80,7 @@ public class GameOfLifeControllerTest {
     void shouldIncludeNeighbourCellsInCandidateSet() {
         when(cellNeighbourStrategy.getNeighbours(eq(new Cell(1, 1)))).thenReturn(Set.of(new Cell(2, 2)));
 
-        controller.calculateNextGeneration(board);
+        controller.computeNextGeneration(board);
 
         verify(cellNeighbourStrategy, atLeastOnce()).getNeighbours(new Cell(1, 1));
     }

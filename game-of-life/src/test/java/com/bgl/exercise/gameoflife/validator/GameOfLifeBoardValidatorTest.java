@@ -26,7 +26,7 @@ class GameOfLifeBoardValidatorTest {
     @Test
     void shouldReturnEmptyOptionalWhenNoValidators() {
         GameOfLifeBoardValidator boardValidator = new GameOfLifeBoardValidator(Set.of());
-        Optional<String> result = boardValidator.validateGameOfLifeBoard(gameOfLifeBoard);
+        Optional<String> result = boardValidator.validate(gameOfLifeBoard);
 
         assertTrue(result.isEmpty());
     }
@@ -37,7 +37,7 @@ class GameOfLifeBoardValidatorTest {
         when(validator2.validateAndGetErrorMessage(gameOfLifeBoard)).thenReturn(Optional.empty());
 
         GameOfLifeBoardValidator boardValidator = new GameOfLifeBoardValidator(Set.of(validator1, validator2));
-        Optional<String> result = boardValidator.validateGameOfLifeBoard(gameOfLifeBoard);
+        Optional<String> result = boardValidator.validate(gameOfLifeBoard);
 
         assertTrue(result.isEmpty());
         verify(validator1).validateAndGetErrorMessage(gameOfLifeBoard);
@@ -50,7 +50,7 @@ class GameOfLifeBoardValidatorTest {
         when(validator2.validateAndGetErrorMessage(gameOfLifeBoard)).thenReturn(Optional.empty());
 
         GameOfLifeBoardValidator boardValidator = new GameOfLifeBoardValidator(Set.of(validator1, validator2));
-        Optional<String> result = boardValidator.validateGameOfLifeBoard(gameOfLifeBoard);
+        Optional<String> result = boardValidator.validate(gameOfLifeBoard);
 
         assertTrue(result.isPresent());
         assertEquals("Columns invalid", result.get());
@@ -62,7 +62,7 @@ class GameOfLifeBoardValidatorTest {
         when(validator2.validateAndGetErrorMessage(gameOfLifeBoard)).thenReturn(Optional.of("Rows invalid"));
 
         GameOfLifeBoardValidator boardValidator = new GameOfLifeBoardValidator(Set.of(validator1, validator2));
-        Optional<String> result = boardValidator.validateGameOfLifeBoard(gameOfLifeBoard);
+        Optional<String> result = boardValidator.validate(gameOfLifeBoard);
 
         assertTrue(result.isPresent());
         assertTrue(result.get().contains("Columns invalid"));

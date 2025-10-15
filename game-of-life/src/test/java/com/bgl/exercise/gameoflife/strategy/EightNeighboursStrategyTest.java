@@ -8,9 +8,9 @@ import java.util.Set;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
-class EightNeighbourStrategyTest {
+class EightNeighboursStrategyTest {
 
-    private final EightNeighbourStrategy strategy = EightNeighbourStrategy.getInstance();
+    private final EightNeighboursStrategy strategy = EightNeighboursStrategy.getInstance();
 
     @Test
     void testGetNeighboursForMiddleCell() {

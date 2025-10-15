@@ -1,6 +1,6 @@
 package com.bgl.exercise.gameoflife;
 
-import com.bgl.exercise.gameoflife.game.EightNeighbourGameOfLife;
+import com.bgl.exercise.gameoflife.game.EightNeighboursGameOfLife;
 
 public class GameOfLifeApplication {
 
@@ -10,7 +10,7 @@ public class GameOfLifeApplication {
                 {5, 6}, {6, 6}, {7, 6}
         };
 
-        EightNeighbourGameOfLife game = new EightNeighbourGameOfLife(200, 200, aliveCellCoordinates);
+        EightNeighboursGameOfLife game = new EightNeighboursGameOfLife(200, 200, aliveCellCoordinates);
 
         try {
             for (int i = 0; i < 100; i++)

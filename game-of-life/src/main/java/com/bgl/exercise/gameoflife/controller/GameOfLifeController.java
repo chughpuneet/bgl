@@ -17,7 +17,7 @@ public class GameOfLifeController {
         this.ruleEngine = ruleEngine;
     }
 
-    public AliveGeneration calculateNextGeneration(GameOfLifeBoard gameOfLifeBoard) {
+    public AliveGeneration computeNextGeneration(GameOfLifeBoard gameOfLifeBoard) {
         Set<Cell> candidateCellsForStateChange = collectAliveAndNeighbouringCells(gameOfLifeBoard);
 
         Set<Cell> nextGenerationAliveCells = candidateCellsForStateChange
