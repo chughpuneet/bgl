@@ -1,0 +1,51 @@
+package com.bgl.exercise.gameoflife.game;
+
+import com.bgl.exercise.gameoflife.controller.GameOfLifeController;
+import com.bgl.exercise.gameoflife.model.AliveGeneration;
+import com.bgl.exercise.gameoflife.model.Cell;
+import com.bgl.exercise.gameoflife.model.GameOfLifeBoard;
+import com.bgl.exercise.gameoflife.model.Grid;
+import com.bgl.exercise.gameoflife.rule.GameOfLifeRulesFactory;
+import com.bgl.exercise.gameoflife.rule.RuleEngine;
+import com.bgl.exercise.gameoflife.strategy.EightNeighbourStrategy;
+import com.bgl.exercise.gameoflife.validator.GameOfLifeBoardValidator;
+import com.bgl.exercise.gameoflife.validator.ValidatorDefinitions;
+import java.util.Arrays;
+import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+public class EightNeighbourGameOfLife {
+
+    private final GameOfLifeBoard gameOfLifeBoard;
+    private final GameOfLifeController controller;
+    private final GameOfLifeBoardValidator validator;
+
+    public EightNeighbourGameOfLife(int columns, int rows, int[][] aliveCellCoordinates) {
+        this.gameOfLifeBoard = new GameOfLifeBoard(new Grid(columns, rows),
+                new AliveGeneration(toGridCells(aliveCellCoordinates)),
+                EightNeighbourStrategy.getInstance());
+        this.controller = new GameOfLifeController(new RuleEngine(GameOfLifeRulesFactory.getInstance().getGameOfLifeRules()));
+        this.validator = new GameOfLifeBoardValidator(ValidatorDefinitions.DEFAULT.getValidators());
+        validateGameOfLifeBoard();
+    }
+
+    public AliveGeneration advanceToNextGeneration() {
+        AliveGeneration nextGeneration = controller.calculateNextGeneration(gameOfLifeBoard);
+        gameOfLifeBoard.advanceToNextGeneration(nextGeneration);
+        return nextGeneration;
+    }
+
+    private Set<Cell> toGridCells(int[][] cellCoordinates) {
+        return Arrays.stream(cellCoordinates)
+                .map(cellCoordinate -> new Cell(cellCoordinate[0], cellCoordinate[1]))
+                .collect(Collectors.toSet());
+    }
+
+    private void validateGameOfLifeBoard() {
+        Optional<String> validationErrorMessage = validator.validateGameOfLifeBoard(gameOfLifeBoard);
+        if (validationErrorMessage.isPresent()) {
+            throw new IllegalArgumentException(validationErrorMessage.get());
+        }
+    }
+}
