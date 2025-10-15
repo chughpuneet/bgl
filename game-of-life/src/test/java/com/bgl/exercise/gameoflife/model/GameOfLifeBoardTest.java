@@ -1,7 +1,7 @@
 package com.bgl.exercise.gameoflife.model;
 
 import com.bgl.exercise.gameoflife.constant.CellLifeState;
-import com.bgl.exercise.gameoflife.strategy.CellNeighbourStrategy;
+import com.bgl.exercise.gameoflife.finder.CellNeighboursFinder;
 import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -19,7 +19,7 @@ import static org.mockito.Mockito.when;
 public class GameOfLifeBoardTest {
 
     @Mock
-    CellNeighbourStrategy cellNeighbourStrategy;
+    CellNeighboursFinder cellNeighboursFinder;
     @Mock
     Grid grid;
     @Mock
@@ -29,13 +29,13 @@ public class GameOfLifeBoardTest {
 
     @BeforeEach
     public void setUp() {
-        board = new GameOfLifeBoard(grid, aliveGeneration, cellNeighbourStrategy);
+        board = new GameOfLifeBoard(grid, aliveGeneration, cellNeighboursFinder);
     }
 
     @Test
     public void shouldReturnAllNeighboursForCenterCell() {
         Cell center = new Cell(1, 1);
-        when(cellNeighbourStrategy.getNeighbours(center)).thenReturn(
+        when(cellNeighboursFinder.find(center)).thenReturn(
                 Set.of(
                         new Cell(1, 2),
                         new Cell(0, 1),
@@ -57,7 +57,7 @@ public class GameOfLifeBoardTest {
     @Test
     public void shouldReturnNeighboursWithinBoundsForCornerCell() {
         Cell corner = new Cell(0, 0);
-        when(cellNeighbourStrategy.getNeighbours(corner)).thenReturn(
+        when(cellNeighboursFinder.find(corner)).thenReturn(
                 Set.of(
                         new Cell(0, 1),
                         new Cell(1, 0),
@@ -74,7 +74,7 @@ public class GameOfLifeBoardTest {
     @Test
     public void shouldReturnEmptyWhenNoNeighbourWithGivenStateIsPresent() {
         Cell cell = new Cell(0, 0);
-        when(cellNeighbourStrategy.getNeighbours(cell)).thenReturn(
+        when(cellNeighboursFinder.find(cell)).thenReturn(
                 Set.of(
                         new Cell(0, 1),
                         new Cell(1, 0),
@@ -94,7 +94,7 @@ public class GameOfLifeBoardTest {
     public void shouldReturnOnlyNeighboursWithGivenState() {
         Cell cell = new Cell(0, 0);
         Cell aliveNeighbourCell = new Cell(1, 0);
-        when(cellNeighbourStrategy.getNeighbours(cell)).thenReturn(
+        when(cellNeighboursFinder.find(cell)).thenReturn(
                 Set.of(
                         aliveNeighbourCell,
                         new Cell(1, 1))

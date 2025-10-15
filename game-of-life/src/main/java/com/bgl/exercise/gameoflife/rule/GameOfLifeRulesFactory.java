@@ -7,7 +7,7 @@ public class GameOfLifeRulesFactory {
     private GameOfLifeRulesFactory() {
     }
 
-    public List<StateTransitionRule> getGameOfLifeRules() {
+    public List<CellStateTransitionRule> getGameOfLifeRules() {
         return List.of(
                 AliveCellUnderPopulationDeathRule.getInstance(),
                 AliveCellSurvivalRule.getInstance(),

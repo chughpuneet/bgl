@@ -2,7 +2,7 @@ package com.bgl.exercise.gameoflife.rule;
 
 import com.bgl.exercise.gameoflife.constant.CellLifeState;
 
-public class AliveCellOverPopulationDeathRule implements StateTransitionRule {
+public class AliveCellOverPopulationDeathRule implements CellStateTransitionRule {
     private static final AliveCellOverPopulationDeathRule INSTANCE = new AliveCellOverPopulationDeathRule();
 
     private AliveCellOverPopulationDeathRule() {

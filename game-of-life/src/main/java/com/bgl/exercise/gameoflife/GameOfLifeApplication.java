@@ -1,6 +1,6 @@
 package com.bgl.exercise.gameoflife;
 
-import com.bgl.exercise.gameoflife.game.EightNeighboursGameOfLife;
+import com.bgl.exercise.gameoflife.simulator.GameOfLifeSimulator;
 
 public class GameOfLifeApplication {
 
@@ -10,11 +10,11 @@ public class GameOfLifeApplication {
                 {5, 6}, {6, 6}, {7, 6}
         };
 
-        EightNeighboursGameOfLife game = new EightNeighboursGameOfLife(200, 200, aliveCellCoordinates);
+        GameOfLifeSimulator gameSimulator = new GameOfLifeSimulator(200, 200, aliveCellCoordinates);
 
         try {
             for (int i = 0; i < 100; i++)
-                System.out.printf("%d:%s%n", i + 1, game.advanceToNextGeneration());
+                System.out.printf("%d:%s%n", i + 1, gameSimulator.advanceToNextGeneration());
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }

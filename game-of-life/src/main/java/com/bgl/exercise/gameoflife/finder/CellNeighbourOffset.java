@@ -1,4 +1,4 @@
-package com.bgl.exercise.gameoflife.strategy;
+package com.bgl.exercise.gameoflife.finder;
 
 public enum CellNeighbourOffset {
     TOP(0, -1),

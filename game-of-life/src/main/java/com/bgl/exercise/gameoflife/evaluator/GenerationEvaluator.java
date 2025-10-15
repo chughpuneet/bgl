@@ -1,37 +1,30 @@
-package com.bgl.exercise.gameoflife.controller;
+package com.bgl.exercise.gameoflife.evaluator;
 
 import com.bgl.exercise.gameoflife.constant.CellLifeState;
 import com.bgl.exercise.gameoflife.model.AliveGeneration;
 import com.bgl.exercise.gameoflife.model.Cell;
 import com.bgl.exercise.gameoflife.model.GameOfLifeBoard;
-import com.bgl.exercise.gameoflife.rule.RuleEngine;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class GameOfLifeController {
+public class GenerationEvaluator {
 
-    private final RuleEngine ruleEngine;
+    private final CellStateEvaluator cellStateEvaluator;
 
-    public GameOfLifeController(RuleEngine ruleEngine) {
-        this.ruleEngine = ruleEngine;
+    public GenerationEvaluator(CellStateEvaluator cellStateEvaluator) {
+        this.cellStateEvaluator = cellStateEvaluator;
     }
 
-    public AliveGeneration computeNextGeneration(GameOfLifeBoard gameOfLifeBoard) {
+    public AliveGeneration evaluate(GameOfLifeBoard gameOfLifeBoard) {
         Set<Cell> candidateCellsForStateChange = collectAliveAndNeighbouringCells(gameOfLifeBoard);
 
         Set<Cell> nextGenerationAliveCells = candidateCellsForStateChange
                 .stream()
-                .filter(cell -> computeNextCellState(cell, gameOfLifeBoard) == CellLifeState.ALIVE)
+                .filter(cell -> isCellAliveInNextGeneration(cell, gameOfLifeBoard))
                 .collect(Collectors.toSet());
 
         return new AliveGeneration(nextGenerationAliveCells);
-    }
-
-    private CellLifeState computeNextCellState(Cell cell, GameOfLifeBoard gameOfLifeBoard) {
-        return ruleEngine.applyNextStateRule(
-                gameOfLifeBoard.getCellState(cell),
-                gameOfLifeBoard.getNeighboursWithState(cell, CellLifeState.ALIVE).size());
     }
 
     private Set<Cell> collectAliveAndNeighbouringCells(GameOfLifeBoard gameOfLifeBoard) {
@@ -42,5 +35,16 @@ public class GameOfLifeController {
                                 Stream.of(cell),
                                 gameOfLifeBoard.getNeighbours(cell).stream()))
                 .collect(Collectors.toSet());
+    }
+
+    private boolean isCellAliveInNextGeneration(Cell cell, GameOfLifeBoard gameOfLifeBoard) {
+        CellLifeState nextCellState = evaluateNextCellState(cell, gameOfLifeBoard);
+        return nextCellState == CellLifeState.ALIVE;
+    }
+
+    private CellLifeState evaluateNextCellState(Cell cell, GameOfLifeBoard gameOfLifeBoard) {
+        return cellStateEvaluator.evaluate(
+                gameOfLifeBoard.getCellState(cell),
+                gameOfLifeBoard.getNeighboursWithState(cell, CellLifeState.ALIVE).size());
     }
 }

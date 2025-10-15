@@ -1,6 +1,7 @@
 package com.bgl.exercise.gameoflife.validator;
 
 import com.bgl.exercise.gameoflife.model.GameOfLifeBoard;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import org.junit.jupiter.api.Test;
@@ -8,7 +9,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -24,9 +24,9 @@ class GameOfLifeBoardValidatorTest {
     private GameOfLifeBoard gameOfLifeBoard;
 
     @Test
-    void shouldReturnEmptyOptionalWhenNoValidators() {
+    void shouldReturnEmptyOptionalWhenNoValidatorsPresent() {
         GameOfLifeBoardValidator boardValidator = new GameOfLifeBoardValidator(Set.of());
-        Optional<String> result = boardValidator.validate(gameOfLifeBoard);
+        Optional<List<String>> result = boardValidator.validate(gameOfLifeBoard);
 
         assertTrue(result.isEmpty());
     }
@@ -37,7 +37,7 @@ class GameOfLifeBoardValidatorTest {
         when(validator2.validateAndGetErrorMessage(gameOfLifeBoard)).thenReturn(Optional.empty());
 
         GameOfLifeBoardValidator boardValidator = new GameOfLifeBoardValidator(Set.of(validator1, validator2));
-        Optional<String> result = boardValidator.validate(gameOfLifeBoard);
+        Optional<List<String>> result = boardValidator.validate(gameOfLifeBoard);
 
         assertTrue(result.isEmpty());
         verify(validator1).validateAndGetErrorMessage(gameOfLifeBoard);
@@ -50,10 +50,10 @@ class GameOfLifeBoardValidatorTest {
         when(validator2.validateAndGetErrorMessage(gameOfLifeBoard)).thenReturn(Optional.empty());
 
         GameOfLifeBoardValidator boardValidator = new GameOfLifeBoardValidator(Set.of(validator1, validator2));
-        Optional<String> result = boardValidator.validate(gameOfLifeBoard);
+        Optional<List<String>> result = boardValidator.validate(gameOfLifeBoard);
 
         assertTrue(result.isPresent());
-        assertEquals("Columns invalid", result.get());
+        assertTrue(result.get().contains("Columns invalid"));
     }
 
     @Test
@@ -62,7 +62,7 @@ class GameOfLifeBoardValidatorTest {
         when(validator2.validateAndGetErrorMessage(gameOfLifeBoard)).thenReturn(Optional.of("Rows invalid"));
 
         GameOfLifeBoardValidator boardValidator = new GameOfLifeBoardValidator(Set.of(validator1, validator2));
-        Optional<String> result = boardValidator.validate(gameOfLifeBoard);
+        Optional<List<String>> result = boardValidator.validate(gameOfLifeBoard);
 
         assertTrue(result.isPresent());
         assertTrue(result.get().contains("Columns invalid"));

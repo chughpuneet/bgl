@@ -1,4 +1,4 @@
-package com.bgl.exercise.gameoflife.strategy;
+package com.bgl.exercise.gameoflife.finder;
 
 import com.bgl.exercise.gameoflife.model.Cell;
 import org.junit.jupiter.api.Test;
@@ -8,15 +8,15 @@ import java.util.Set;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
-class EightNeighboursStrategyTest {
+class CellEightNeighboursFinderTest {
 
-    private final EightNeighboursStrategy strategy = EightNeighboursStrategy.getInstance();
+    private final CellEightNeighboursFinder neighboursFinder = CellEightNeighboursFinder.getInstance();
 
     @Test
-    void testGetNeighboursForMiddleCell() {
+    void shouldReturnEightNeighboursForMiddleCell() {
         Cell cell = new Cell(2, 2);
 
-        Set<Cell> neighbours = strategy.getNeighbours(cell);
+        Set<Cell> neighbours = neighboursFinder.find(cell);
 
         assertEquals(8, neighbours.size(), "Should return 8 neighbours");
 
@@ -30,9 +30,9 @@ class EightNeighboursStrategyTest {
     }
 
     @Test
-    void testNeighboursDoNotIncludeOriginalCell() {
+    void shouldNotIncludeSelfAsNeighbour() {
         Cell cell = new Cell(5, 5);
-        Set<Cell> neighbours = strategy.getNeighbours(cell);
+        Set<Cell> neighbours = neighboursFinder.find(cell);
         assertFalse(neighbours.contains(cell));
     }
 }

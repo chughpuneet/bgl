@@ -1,6 +1,7 @@
-package com.bgl.exercise.gameoflife.rule;
+package com.bgl.exercise.gameoflife.evaluator;
 
 import com.bgl.exercise.gameoflife.constant.CellLifeState;
+import com.bgl.exercise.gameoflife.rule.CellStateTransitionRule;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,18 +16,18 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class RuleEngineTest {
+public class CellStateEvaluatorTest {
 
     @Mock
-    private StateTransitionRule rule1;
+    private CellStateTransitionRule rule1;
     @Mock
-    private StateTransitionRule rule2;
+    private CellStateTransitionRule rule2;
 
-    private RuleEngine ruleEngine;
+    private CellStateEvaluator cellStateEvaluator;
 
     @BeforeEach
     public void setup() {
-        ruleEngine = new RuleEngine(List.of(rule1, rule2));
+        cellStateEvaluator = new CellStateEvaluator(List.of(rule1, rule2));
     }
 
     @Test
@@ -34,7 +35,7 @@ public class RuleEngineTest {
         when(rule1.matches(any(), anyInt())).thenReturn(false);
         when(rule2.matches(any(), anyInt())).thenReturn(true);
 
-        ruleEngine.applyNextStateRule(CellLifeState.DEAD, 1);
+        cellStateEvaluator.evaluate(CellLifeState.DEAD, 1);
 
         verify(rule1, times(0)).nextState();
         verify(rule2).nextState();
@@ -44,7 +45,7 @@ public class RuleEngineTest {
     void shouldApplyFirstRuleIfMultipleRuleConditionMatches() {
         when(rule1.matches(any(), anyInt())).thenReturn(true);
 
-        ruleEngine.applyNextStateRule(CellLifeState.DEAD, 1);
+        cellStateEvaluator.evaluate(CellLifeState.DEAD, 1);
 
         verify(rule1).nextState();
         verify(rule2, times(0)).nextState();
@@ -55,7 +56,7 @@ public class RuleEngineTest {
         when(rule1.matches(any(), anyInt())).thenReturn(false);
         when(rule2.matches(any(), anyInt())).thenReturn(false);
 
-        ruleEngine.applyNextStateRule(CellLifeState.DEAD, 1);
+        cellStateEvaluator.evaluate(CellLifeState.DEAD, 1);
 
         verify(rule1, times(0)).nextState();
         verify(rule2, times(0)).nextState();

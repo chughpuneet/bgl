@@ -12,7 +12,7 @@ public class GameOfLifeBoardValidator {
         this.validators = validators;
     }
 
-    public Optional<String> validate(GameOfLifeBoard gameOfLifeBoard) {
+    public Optional<List<String>> validate(GameOfLifeBoard gameOfLifeBoard) {
         List<String> validationErrorMessages = validators.stream()
                 .map(v -> v.validateAndGetErrorMessage(gameOfLifeBoard))
                 .filter(Optional::isPresent)
@@ -20,7 +20,7 @@ public class GameOfLifeBoardValidator {
                 .toList();
 
         if (!validationErrorMessages.isEmpty()) {
-            return Optional.of(String.join("; ", validationErrorMessages));
+            return Optional.of(validationErrorMessages);
         }
 
         return Optional.empty();

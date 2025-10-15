@@ -2,7 +2,7 @@ package com.bgl.exercise.gameoflife.rule;
 
 import com.bgl.exercise.gameoflife.constant.CellLifeState;
 
-public interface StateTransitionRule {
+public interface CellStateTransitionRule {
     CellLifeState nextState();
 
     boolean matches(CellLifeState currentCellLifeState, int aliveNeighbours);

@@ -2,7 +2,7 @@ package com.bgl.exercise.gameoflife.rule;
 
 import com.bgl.exercise.gameoflife.constant.CellLifeState;
 
-public class AliveCellUnderPopulationDeathRule implements StateTransitionRule {
+public class AliveCellUnderPopulationDeathRule implements CellStateTransitionRule {
 
     private static final AliveCellUnderPopulationDeathRule INSTANCE = new AliveCellUnderPopulationDeathRule();
 

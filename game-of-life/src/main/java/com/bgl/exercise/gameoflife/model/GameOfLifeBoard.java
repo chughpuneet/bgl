@@ -1,23 +1,23 @@
 package com.bgl.exercise.gameoflife.model;
 
 import com.bgl.exercise.gameoflife.constant.CellLifeState;
-import com.bgl.exercise.gameoflife.strategy.CellNeighbourStrategy;
+import com.bgl.exercise.gameoflife.finder.CellNeighboursFinder;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 public class GameOfLifeBoard {
     private final Grid grid;
     private AliveGeneration aliveGeneration;
-    private final CellNeighbourStrategy cellNeighbourStrategy;
+    private final CellNeighboursFinder cellNeighboursFinder;
 
-    public GameOfLifeBoard(Grid grid, AliveGeneration aliveGeneration, CellNeighbourStrategy cellNeighbourStrategy) {
+    public GameOfLifeBoard(Grid grid, AliveGeneration aliveGeneration, CellNeighboursFinder cellNeighboursFinder) {
         this.grid = grid;
         this.aliveGeneration = aliveGeneration;
-        this.cellNeighbourStrategy = cellNeighbourStrategy;
+        this.cellNeighboursFinder = cellNeighboursFinder;
     }
 
     public Set<Cell> getNeighbours(Cell cell) {
-        return cellNeighbourStrategy.getNeighbours(cell)
+        return cellNeighboursFinder.find(cell)
                 .stream()
                 .filter(grid::isCellWithinGrid)
                 .collect(Collectors.toSet());
@@ -34,8 +34,8 @@ public class GameOfLifeBoard {
         return aliveGeneration.contains(cell) ? CellLifeState.ALIVE : CellLifeState.DEAD;
     }
 
-    public void advanceToNextGeneration(AliveGeneration nextState) {
-        this.aliveGeneration = nextState;
+    public void advanceToNextGeneration(AliveGeneration nextGeneration) {
+        this.aliveGeneration = nextGeneration;
     }
 
     public AliveGeneration getAliveGeneration() {
