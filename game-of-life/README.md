@@ -36,7 +36,7 @@ The project is designed following **SOLID principles**, **Singleton pattern**, *
 
 - **Neighbour Strategy**:
     - `CellNeighbourStrategy` abstract class defines how to fetch neighbours.
-    - `EightNeighbourStrategy` implements the classic eight-neighbour logic using the **Strategy pattern** and is a **Singleton**.
+    - `EightNeighboursStrategy` implements the classic eight-neighbour logic using the **Strategy pattern** and is a **Singleton**.
 
 - **Models & State**:
     - `Cell`: Represents a single cell with `row` and `column`.
@@ -50,10 +50,10 @@ The project is designed following **SOLID principles**, **Singleton pattern**, *
     - `ValidatorFactory` acts as a **Factory** to create pre-defined sets of validators for the board.
 
 - **Controller / Application**:
-    - `EightNeighbourGameOfLife` acts as the **controller** coordinating the simulation.
+    - `GameOfLifeController` generic **controller** coordinating the generation change.
+    - `EightNeighboursGameOfLife` game which considers 8 neighbours for a particular cell in the grid.
     - It interacts with models, applies rules via the `RuleEngine`, and advances generations.
     - Responsible for exposing methods like `advanceToNextGeneration()` to manage the simulation flow.
-
 ---
 
 ## Input Format
