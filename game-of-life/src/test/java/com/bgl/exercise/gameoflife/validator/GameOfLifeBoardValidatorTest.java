@@ -33,21 +33,21 @@ class GameOfLifeBoardValidatorTest {
 
     @Test
     void shouldReturnEmptyOptionalWhenAllValidatorsPass() {
-        when(validator1.validateAndGetErrorMessage(gameOfLifeBoard)).thenReturn(Optional.empty());
-        when(validator2.validateAndGetErrorMessage(gameOfLifeBoard)).thenReturn(Optional.empty());
+        when(validator1.validate(gameOfLifeBoard)).thenReturn(Optional.empty());
+        when(validator2.validate(gameOfLifeBoard)).thenReturn(Optional.empty());
 
         GameOfLifeBoardValidator boardValidator = new GameOfLifeBoardValidator(Set.of(validator1, validator2));
         Optional<List<String>> result = boardValidator.validate(gameOfLifeBoard);
 
         assertTrue(result.isEmpty());
-        verify(validator1).validateAndGetErrorMessage(gameOfLifeBoard);
-        verify(validator2).validateAndGetErrorMessage(gameOfLifeBoard);
+        verify(validator1).validate(gameOfLifeBoard);
+        verify(validator2).validate(gameOfLifeBoard);
     }
 
     @Test
     void shouldReturnErrorMessageWhenSomeValidatorsFail() {
-        when(validator1.validateAndGetErrorMessage(gameOfLifeBoard)).thenReturn(Optional.of("Columns invalid"));
-        when(validator2.validateAndGetErrorMessage(gameOfLifeBoard)).thenReturn(Optional.empty());
+        when(validator1.validate(gameOfLifeBoard)).thenReturn(Optional.of("Columns invalid"));
+        when(validator2.validate(gameOfLifeBoard)).thenReturn(Optional.empty());
 
         GameOfLifeBoardValidator boardValidator = new GameOfLifeBoardValidator(Set.of(validator1, validator2));
         Optional<List<String>> result = boardValidator.validate(gameOfLifeBoard);
@@ -58,8 +58,8 @@ class GameOfLifeBoardValidatorTest {
 
     @Test
     void shouldReturnConcatenatedErrorMessagesWhenMultipleValidatorsFail() {
-        when(validator1.validateAndGetErrorMessage(gameOfLifeBoard)).thenReturn(Optional.of("Columns invalid"));
-        when(validator2.validateAndGetErrorMessage(gameOfLifeBoard)).thenReturn(Optional.of("Rows invalid"));
+        when(validator1.validate(gameOfLifeBoard)).thenReturn(Optional.of("Columns invalid"));
+        when(validator2.validate(gameOfLifeBoard)).thenReturn(Optional.of("Rows invalid"));
 
         GameOfLifeBoardValidator boardValidator = new GameOfLifeBoardValidator(Set.of(validator1, validator2));
         Optional<List<String>> result = boardValidator.validate(gameOfLifeBoard);

@@ -14,7 +14,7 @@ public class OutOfBoundCellValidator implements Validator {
     }
 
     @Override
-    public Optional<String> validateAndGetErrorMessage(GameOfLifeBoard board) {
+    public Optional<String> validate(GameOfLifeBoard board) {
         if(board.getGrid().columns() > 0 && board.getGrid().rows() > 0){
             List<Cell> outOfBoundCells = getOutOfBoundsCell(board.getAliveGeneration().aliveCells(), board.getGrid());
             if (!outOfBoundCells.isEmpty()) {

@@ -8,7 +8,7 @@ public class GridColumnsValidator implements Validator {
 
     private GridColumnsValidator() {}
     @Override
-    public Optional<String> validateAndGetErrorMessage(GameOfLifeBoard board) {
+    public Optional<String> validate(GameOfLifeBoard board) {
         int gridColumns = board.getGrid().columns();
 
         if (gridColumns < 1) {

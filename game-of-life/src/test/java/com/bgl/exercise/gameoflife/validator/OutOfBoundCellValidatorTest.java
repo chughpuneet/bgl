@@ -43,7 +43,7 @@ class OutOfBoundCellValidatorTest {
         when(board.getAliveGeneration()).thenReturn(aliveGeneration);
         when(aliveGeneration.aliveCells()).thenReturn(Set.of(inBoundsCell, outOfBoundsCell));
 
-        Optional<String> result = OutOfBoundCellValidator.getInstance().validateAndGetErrorMessage(board);
+        Optional<String> result = OutOfBoundCellValidator.getInstance().validate(board);
 
         assertTrue(result.isPresent());
         assertEquals(String.format("%s cells out of grid bounds", List.of(outOfBoundsCell)), result.get());
@@ -63,7 +63,7 @@ class OutOfBoundCellValidatorTest {
         when(board.getAliveGeneration()).thenReturn(aliveGeneration);
         when(aliveGeneration.aliveCells()).thenReturn(Set.of(cell1, cell2));
 
-        Optional<String> result = OutOfBoundCellValidator.getInstance().validateAndGetErrorMessage(board);
+        Optional<String> result = OutOfBoundCellValidator.getInstance().validate(board);
 
         assertTrue(result.isEmpty());
     }
@@ -73,7 +73,7 @@ class OutOfBoundCellValidatorTest {
         when(board.getGrid()).thenReturn(grid);
         when(grid.columns()).thenReturn(0);
 
-        Optional<String> result = OutOfBoundCellValidator.getInstance().validateAndGetErrorMessage(board);
+        Optional<String> result = OutOfBoundCellValidator.getInstance().validate(board);
 
         assertTrue(result.isEmpty());
     }
@@ -84,7 +84,7 @@ class OutOfBoundCellValidatorTest {
         when(grid.columns()).thenReturn(1);
         when(grid.rows()).thenReturn(0);
 
-        Optional<String> result = OutOfBoundCellValidator.getInstance().validateAndGetErrorMessage(board);
+        Optional<String> result = OutOfBoundCellValidator.getInstance().validate(board);
 
         assertTrue(result.isEmpty());
     }

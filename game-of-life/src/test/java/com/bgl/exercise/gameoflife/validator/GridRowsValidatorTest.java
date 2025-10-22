@@ -26,7 +26,7 @@ public class GridRowsValidatorTest {
         when(board.getGrid()).thenReturn(grid);
         when(grid.rows()).thenReturn(0);
 
-        Optional<String> result = GridRowsValidator.getInstance().validateAndGetErrorMessage(board);
+        Optional<String> result = GridRowsValidator.getInstance().validate(board);
 
         assertTrue(result.isPresent());
         assertEquals("Grid rows must be greater than zero", result.get());
@@ -37,7 +37,7 @@ public class GridRowsValidatorTest {
         when(board.getGrid()).thenReturn(grid);
         when(grid.rows()).thenReturn(1);
 
-        Optional<String> result = GridRowsValidator.getInstance().validateAndGetErrorMessage(board);
+        Optional<String> result = GridRowsValidator.getInstance().validate(board);
 
         assertTrue(result.isEmpty());
     }

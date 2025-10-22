@@ -7,7 +7,7 @@ public class GridRowsValidator implements Validator {
     private static final GridRowsValidator INSTANCE = new GridRowsValidator();
     private GridRowsValidator() {}
     @Override
-    public Optional<String> validateAndGetErrorMessage(GameOfLifeBoard board) {
+    public Optional<String> validate(GameOfLifeBoard board) {
         int gridRows = board.getGrid().rows();
 
         if (gridRows < 1) {

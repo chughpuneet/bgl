@@ -4,5 +4,5 @@ import com.bgl.exercise.gameoflife.model.GameOfLifeBoard;
 import java.util.Optional;
 
 public interface Validator {
-    Optional<String> validateAndGetErrorMessage(GameOfLifeBoard board);
+    Optional<String> validate(GameOfLifeBoard board);
 }

@@ -14,7 +14,7 @@ public class GameOfLifeBoardValidator {
 
     public Optional<List<String>> validate(GameOfLifeBoard gameOfLifeBoard) {
         List<String> validationErrorMessages = validators.stream()
-                .map(v -> v.validateAndGetErrorMessage(gameOfLifeBoard))
+                .map(v -> v.validate(gameOfLifeBoard))
                 .filter(Optional::isPresent)
                 .map(Optional::get)
                 .toList();

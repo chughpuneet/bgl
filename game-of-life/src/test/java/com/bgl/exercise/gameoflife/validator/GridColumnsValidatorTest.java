@@ -27,7 +27,7 @@ class GridColumnsValidatorTest {
         when(board.getGrid()).thenReturn(grid);
         when(grid.columns()).thenReturn(0);
 
-        Optional<String> result = GridColumnsValidator.getInstance().validateAndGetErrorMessage(board);
+        Optional<String> result = GridColumnsValidator.getInstance().validate(board);
 
         assertTrue(result.isPresent());
         assertEquals("Grid columns must be greater than zero", result.get());
@@ -38,7 +38,7 @@ class GridColumnsValidatorTest {
         when(board.getGrid()).thenReturn(grid);
         when(grid.columns()).thenReturn(1);
 
-        Optional<String> result = GridColumnsValidator.getInstance().validateAndGetErrorMessage(board);
+        Optional<String> result = GridColumnsValidator.getInstance().validate(board);
 
         assertTrue(result.isEmpty());
     }
