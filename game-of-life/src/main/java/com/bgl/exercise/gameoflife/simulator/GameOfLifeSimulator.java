@@ -24,12 +24,13 @@ public class GameOfLifeSimulator {
 
     public GameOfLifeSimulator(int columns, int rows, int[][] aliveCellCoordinates) {
         this.validator = new GameOfLifeBoardValidator(ValidatorFactory.getInstance().defaultValidators());
-        this.generationEvaluator = new GenerationEvaluator(new CellStateEvaluator(GameOfLifeRulesFactory.getInstance().getGameOfLifeRules()));
+        this.generationEvaluator = new GenerationEvaluator(
+                new CellStateEvaluator(GameOfLifeRulesFactory.getInstance().getGameOfLifeRules()),
+                CellEightNeighboursFinder.getInstance());
 
         GameOfLifeBoard tempBoard = new GameOfLifeBoard(
                 new Grid(columns, rows),
-                new AliveGeneration(toGridCells(aliveCellCoordinates)),
-                CellEightNeighboursFinder.getInstance());
+                new AliveGeneration(toGridCells(aliveCellCoordinates)));
         validateGameOfLifeBoard(tempBoard);
         this.gameOfLifeBoard = tempBoard;
     }

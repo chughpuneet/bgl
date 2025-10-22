@@ -36,19 +36,18 @@ public class GenerationEvaluatorTest {
 
     @BeforeEach
     public void setUp() {
-        generationEvaluator = new GenerationEvaluator(cellStateEvaluator);
+        generationEvaluator = new GenerationEvaluator(cellStateEvaluator, cellNeighboursFinder);
 
         board = new GameOfLifeBoard(
                 new Grid(3, 3),
-                new AliveGeneration(new Cell[]{new Cell(1, 1)}),
-                cellNeighboursFinder
+                new AliveGeneration(new Cell[]{new Cell(1, 1)})
         );
     }
 
     @Test
     void shouldEvaluateNextGenerationIfCellSurvivesByRule() {
         when(cellStateEvaluator.evaluate(CellLifeState.ALIVE, 0)).thenReturn(CellLifeState.ALIVE);
-        when(cellNeighboursFinder.find(eq(new Cell(1, 1)))).thenReturn(Set.of(new Cell(2, 2)));
+        when(cellNeighboursFinder.find(eq(new Cell(1, 1)), eq(board))).thenReturn(Set.of(new Cell(2, 2)));
 
         AliveGeneration nextGeneration = generationEvaluator.evaluate(board);
 
@@ -58,7 +57,7 @@ public class GenerationEvaluatorTest {
     @Test
     void shouldEvaluateNextGenerationIfCellDiesByRule() {
         when(cellStateEvaluator.evaluate(CellLifeState.ALIVE, 0)).thenReturn(CellLifeState.DEAD);
-        when(cellNeighboursFinder.find(eq(new Cell(1, 1)))).thenReturn(Set.of(new Cell(2, 2)));
+        when(cellNeighboursFinder.find(eq(new Cell(1, 1)), eq(board))).thenReturn(Set.of(new Cell(2, 2)));
 
         AliveGeneration nextGeneration = generationEvaluator.evaluate(board);
 
@@ -68,7 +67,7 @@ public class GenerationEvaluatorTest {
 
     @Test
     void shouldCallRuleEngineForAliveAndItsNeighbourCells() {
-        when(cellNeighboursFinder.find(eq(new Cell(1, 1)))).thenReturn(Set.of(new Cell(2, 2)));
+        when(cellNeighboursFinder.find(eq(new Cell(1, 1)), eq(board))).thenReturn(Set.of(new Cell(2, 2)));
 
         generationEvaluator.evaluate(board);
 
@@ -77,10 +76,10 @@ public class GenerationEvaluatorTest {
 
     @Test
     void shouldIncludeAliveCellNeighbourCellsForStateChangeCandidates() {
-        when(cellNeighboursFinder.find(eq(new Cell(1, 1)))).thenReturn(Set.of(new Cell(2, 2)));
+        when(cellNeighboursFinder.find(eq(new Cell(1, 1)), eq(board))).thenReturn(Set.of(new Cell(2, 2)));
 
         generationEvaluator.evaluate(board);
 
-        verify(cellNeighboursFinder, atLeastOnce()).find(new Cell(1, 1));
+        verify(cellNeighboursFinder, atLeastOnce()).find(new Cell(1, 1), board);
     }
 }

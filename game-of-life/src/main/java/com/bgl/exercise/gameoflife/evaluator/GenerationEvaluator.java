@@ -1,6 +1,7 @@
 package com.bgl.exercise.gameoflife.evaluator;
 
 import com.bgl.exercise.gameoflife.constant.CellLifeState;
+import com.bgl.exercise.gameoflife.finder.CellNeighboursFinder;
 import com.bgl.exercise.gameoflife.model.AliveGeneration;
 import com.bgl.exercise.gameoflife.model.Cell;
 import com.bgl.exercise.gameoflife.model.GameOfLifeBoard;
@@ -11,9 +12,11 @@ import java.util.stream.Stream;
 public class GenerationEvaluator {
 
     private final CellStateEvaluator cellStateEvaluator;
+    private final CellNeighboursFinder cellNeighboursFinder;
 
-    public GenerationEvaluator(CellStateEvaluator cellStateEvaluator) {
+    public GenerationEvaluator(CellStateEvaluator cellStateEvaluator, CellNeighboursFinder cellNeighboursFinder) {
         this.cellStateEvaluator = cellStateEvaluator;
+        this.cellNeighboursFinder = cellNeighboursFinder;
     }
 
     public AliveGeneration evaluate(GameOfLifeBoard gameOfLifeBoard) {
@@ -33,7 +36,7 @@ public class GenerationEvaluator {
                 .flatMap(cell ->
                         Stream.concat(
                                 Stream.of(cell),
-                                gameOfLifeBoard.getNeighbours(cell).stream()))
+                                cellNeighboursFinder.find(cell, gameOfLifeBoard).stream()))
                 .collect(Collectors.toSet());
     }
 
@@ -45,6 +48,6 @@ public class GenerationEvaluator {
     private CellLifeState evaluateNextCellState(Cell cell, GameOfLifeBoard gameOfLifeBoard) {
         return cellStateEvaluator.evaluate(
                 gameOfLifeBoard.getCellState(cell),
-                gameOfLifeBoard.getNeighboursWithState(cell, CellLifeState.ALIVE).size());
+                cellNeighboursFinder.findWithState(cell, CellLifeState.ALIVE, gameOfLifeBoard).size());
     }
 }
